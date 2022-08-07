@@ -11,4 +11,5 @@ export const storage = {
   view: 'garage',
   sortBy: null,
   sortOrder: null,
+  selectedCar: null,
 } as IStorage;

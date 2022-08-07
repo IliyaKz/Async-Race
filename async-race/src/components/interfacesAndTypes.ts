@@ -71,6 +71,7 @@ interface IStorage {
   view: string;
   sortBy: null | string;
   sortOrder: null | string;
+  selectedCar: null | ICarWithId;
 }
 
 interface IWinData {
