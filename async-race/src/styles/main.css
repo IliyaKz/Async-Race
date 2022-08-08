@@ -28,6 +28,10 @@ body {
   justify-content: center;
   height: 10%;
 }
+.footer {
+  flex-direction: column;
+  gap: 15px;
+}
 .main {
   height: 80%;
 }
@@ -119,4 +123,35 @@ body {
   font-size: 14px;
   color: var(--dark-gray-block);
   margin: 3px;
+}
+.links-container {
+  width: 80%;
+  height: 70px;
+  padding: 10px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+.git-link,
+.course-link,
+.course-logo {
+  transition: 0.5s;
+}
+.git-link {
+  text-decoration: none;
+}
+.git-link,
+.date {
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--light-gray);
+}
+.git-link:hover {
+  color: var(--gray-blue);
+}
+.course-logo:hover {
+  transform: scale(1.2);
 }

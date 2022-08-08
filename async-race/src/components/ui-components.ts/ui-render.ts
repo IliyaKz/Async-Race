@@ -206,6 +206,26 @@ function renderPagination(): string {
   return str;
 }
 
+function renderFooterLinks(): string {
+  const str = `<div class="links-container">
+    <div class="git">
+      <a class="git-link" href="https://github.com/IliyaKz">
+          IliyaKz
+      </a>
+    </div>
+    <div class="course-link">
+      <a href="https://rs.school/js/">
+          <img class="course-logo" src="https://rs.school/images/rs_school_js.svg" alt="RSSchool icon" width="100" height="35">
+      </a>
+    </div>
+    <div class="date">
+      2022        
+    </div>
+  </div>`;
+
+  return str;
+}
+
 function renderPage(): string {
   const str = `
   <header class="header">
@@ -228,6 +248,7 @@ function renderPage(): string {
   </main>
   <footer class="footer">
     ${renderPagination()}
+    ${renderFooterLinks()}
   </footer>`;
 
   return str;
