@@ -1,0 +1,77 @@
+.control-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  gap: 5px;
+  padding: 5px;
+  background: var(--dark-gray-block);
+  margin: 0 20px 0 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: solid 3px;
+  border-image:  linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  border-image-slice: 1;
+}
+.remove-button,
+.select-button {
+  width: 60px;
+  height: 26px;
+}
+.start-button,
+.stop-button {
+  padding: 0;
+  width: 26px;
+  height: 26px;
+  font-size: 20px;
+}
+.stop-button {
+  padding-bottom: 2px;
+}
+.car {
+  width: 60px;
+}
+.track {
+  display: flex;
+  margin-bottom: 5px;
+  border-top: 4px double var(--light-gray);
+  border-bottom: 4px double var(--light-gray);
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--black);
+}
+.car-container{
+  display: flex;
+  align-items: center;
+}
+.flag {
+  width: 50px;
+  height: 50px;
+  margin-right: 120px;
+}
+.flag-icon {
+  fill: var(--light-gray);
+}
+.car-name-container {
+  font-family: 'Kanit';
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
+  padding-bottom: 3px;
+  color: var(--light-gray);
+}
+
+@media screen and (max-width: 768px) {
+  .flag {
+    margin-right: 70px;
+  }
+}

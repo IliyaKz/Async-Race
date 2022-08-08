@@ -1,0 +1,115 @@
+.main-controllers-container {
+  width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border-radius: 10px;
+  background-color: var(--dark-gray-block);
+  box-sizing: border-box;
+  padding: 5px;
+  gap: 20px;
+  border: solid 3px;
+  border-image:  linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  border-image-slice: 1;
+}
+.forms-container {
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: var(--medium-gray);
+  gap: 10px
+}
+.form {
+  width: 180px;
+  background-color: var(--gray-blue-block);
+  display: flex;
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 5px;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.controllers-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  width: 140px;
+  height: 77px;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: var(--medium-gray);
+  row-gap: 10px;
+  column-gap: 10px;
+}
+.input {
+  font-family: inherit;
+  border: solid 3px var(--dark-gray-block);
+  border-radius: 4px;
+  background: var(--medium-gray);
+  height: 18px;
+  width: 120px;
+  font-size: 12px;
+}
+.input:focus {
+  outline: none;
+}
+.input:disabled {
+  background: var(--input-gray-blue);
+}
+.input::placeholder {
+  color: var(--gray-blue);
+}
+.input:disabled::placeholder {
+  color: var(--input-gray-blue);
+}
+.color {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  width: 26px;
+  height: 26px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.color::-webkit-color-swatch {
+  border-radius: 50%;
+  border: solid 3px var(--dark-gray-block);
+}
+.color::-moz-color-swatch {
+  border-radius: 50%;
+  border: solid 3px var(--dark-gray-block);
+}
+::-webkit-color-swatch-wrapper { 
+  padding: 0;
+}
+::-moz-color-swatch-wrapper { 
+  padding: 0;
+}
+.color:disabled {
+  cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+  .main-controllers-container {
+    width: 90%;
+  }
+}

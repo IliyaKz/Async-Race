@@ -1,0 +1,122 @@
+@import './variables.css';
+@import './buttons.css';
+@import './controllers.css';
+@import './message.css';
+@import './table.css';
+@import './tracks.css';
+
+body {
+  margin: 0;
+  background: url('../assets/race-background.jpg');
+  background-size: 300%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Kanit';
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 95%;
+  margin: 10px auto;
+}
+.header,
+.footer {
+  display: flex;
+  justify-content: center;
+  height: 10%;
+}
+.main {
+  height: 80%;
+}
+.view-switcher,
+.pagination {
+  width: 156px;
+  height: 41px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  margin-bottom: 20px;
+  align-self: center;
+}
+.pagination {
+  margin-bottom: 0;
+  margin-top: 50px;
+}
+.switchers-container,
+.pagination-container {
+  width: 150px;
+  height: 35px;
+  background-color: var(--dark-gray-block);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  border-radius: 10px;
+}
+.garage-view,
+.winners-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.winners-view {
+  align-items: center;
+}
+.garage-container {
+  box-sizing: border-box;
+  min-height: 630px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 3px var(--gray-blue);
+  background-color: var(--back-dark-blue);
+}
+.garage-header,
+.winners-header {
+  background: var(--medium-gray);
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 170px;
+}
+.garage-header {
+  width: 150px;
+  justify-content: center;
+  height: 77px;
+}
+.winners-header {
+  margin: 0 auto;
+  border: solid 3px;
+  border-image:  linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  border-image-slice: 1;
+}
+.garage-title,
+.garage-page,
+.winners-title,
+.winners-page {
+  font-size: 14px;
+  color: var(--dark-gray-block);
+  margin: 3px;
+}

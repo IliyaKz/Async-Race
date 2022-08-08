@@ -1,0 +1,71 @@
+.button {
+  font-family: 'Kanit';
+  font-size: 12px;
+  line-height: 12px;
+  background: var(--medium-gray);
+  border-radius: 4px;
+  padding: 2px;
+  width: 60px;
+  height: 26px;
+  box-sizing: border-box;
+  border: solid 3px var(--dark-green);
+  color: var(--dark-green);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.button:hover {
+  background: var(--gray-blue);
+}
+.button:active {
+  background: var(--gray-blue);
+  border: solid 3px var(--light-green);
+  color: var(--light-green);
+}
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:active {
+  background: var(--gray-disabled);
+  border: solid 3px var(--gray-disabled-dark);
+  color: var(--gray-disabled-dark);
+  cursor: default;
+  box-shadow: none;
+}
+.race-button,
+.reset-button {
+  width: 60px;
+}
+.race-button,
+.start-button {
+  background-color: var(--bright-green);
+}
+.reset-button,
+.stop-button {
+  background-color: var(--button-red);
+  border: solid 3px var(--dark-red);
+  color: var(--dark-red);
+}
+.race-button:hover,
+.start-button:hover {
+  background-color: var(--bright-green-hover);
+}
+.reset-button:hover,
+.stop-button:hover {
+  background: var(--button-hover-red);
+}
+.race-button:active,
+.start-button:active {
+  background-color: var(--bright-green-hover);
+  border: solid 3px var(--light-green-yellow);
+  color: var(--light-green-yellow);
+  box-shadow: 0 0 5px 5px var(--green-shadow);
+}
+.reset-button:active,
+.stop-button:active {
+  background: var(--button-hover-red);
+  border: solid 3px var(--light-red);
+  color: var(--light-red);
+  box-shadow: 0 0 5px 5px var(--red-shadow);
+}
+.generator-button {
+  width: 130px;
+}

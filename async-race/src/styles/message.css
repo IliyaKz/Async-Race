@@ -1,0 +1,117 @@
+.message {
+  width: 300px;
+  height: 150px;
+  top: calc(50% - 75px);
+  left: calc(50% - 150px);
+  text-align: center;
+  display: none;
+  position: fixed;
+  background: linear-gradient(45deg, var(--darkest-blue) 35%,
+  var(--medium-blue)  40%,
+   var(--light-blue) 45%,
+   var(--lightest-blue) 50%,
+   var(--light-blue) 55%,
+   var(--medium-blue) 60%,
+   var(--darkest-blue) 65%);
+  background-size: 200%;
+  animation: gradient 2s infinite;
+  background-position: 0 0;
+  border-radius: 20px;
+  box-shadow: 0 0 4px 1px var(--white),
+  0 0 10px 3px var(--shadow-light-blue),
+  0 0 20px 5px var(--shadow-medium-blue),
+  0 0 40px 7px var(--shadow-dark-blue);
+}
+.message-text {
+  margin: 0;
+  font-size: 25px;
+  color: var(--white);
+}
+.message.visible {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+@keyframes gradient {
+  0% {
+    background-position: 200% 200%;
+}
+100% {
+    background-position: 0% 0%;
+}
+}.table-container {
+  display: flex;
+  min-height: 410px;
+  flex-direction: column;
+  align-items: center;
+}
+.table-buttons-container {
+  width: 260px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+  background: var(--dark-gray-block);
+  border: solid 3px;
+  border-image:  linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  border-image-slice: 1;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+.table-button {
+  width: 110px;
+  height: 26px;
+}
+.table {
+  width: 350px;
+  background-color: var(--dark-gray-block);
+  border: solid 3px;
+  border-image:  linear-gradient(-45deg, var(--dark-gray-block) 0%,
+  var(--gray-blue-block) 12.5%,
+  var(--medium-gray) 25%,
+  var(--light-gray) 37.5%,
+  var(--white) 50%,
+  var(--light-gray) 62.5%,
+  var(--medium-gray) 75%,
+  var(--gray-blue-block) 87.5%,
+  var(--dark-gray-block) 100%);
+  border-image-slice: 1;
+}
+.tab-col, .tab-head {
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--dark-gray-block);
+  font-size: 12px;
+  padding: 3px;
+  color: #1a1b29;
+}
+.tab-col {
+  background-color: var(--medium-gray);
+}
+.tab-head {
+  font-weight: 700;
+  background-color: var(--light-gray);
+}
+.tab-name {
+  width: 150px;
+}
+.tab-car {
+  background: var(--black);
+}
+.table-button {
+  cursor: pointer;
+  user-select: none;
+}
