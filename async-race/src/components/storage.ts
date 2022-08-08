@@ -1,14 +1,14 @@
-import { IStorage } from './interfacesAndTypes';
+import { IStorage } from "./interfacesAndTypes";
 
 export const storage = {
   carsPage: 1,
   cars: null,
   carsCount: null,
-  winnersPage: 1, 
+  winnersPage: 1,
   winners: null,
   winnersCount: null,
   animation: {},
-  view: 'garage',
+  view: "garage",
   sortBy: null,
   sortOrder: null,
   selectedCar: null,

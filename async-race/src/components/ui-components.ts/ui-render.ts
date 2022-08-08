@@ -1,5 +1,5 @@
-import { ICarWithId, IWinnerWithCar } from '../interfacesAndTypes';
-import { storage } from '../storage';
+import { ICarWithId, IWinnerWithCar } from "../interfacesAndTypes";
+import { storage } from "../storage";
 
 function renderCar(color: string): string {
   const str = `
@@ -38,10 +38,18 @@ function renderTrack(obj: ICarWithId): string {
   const str = `<div class="track">
     <div class="car-container">
       <div class="control-panel">
-        <button class="button select-button" id="select-${obj.id}">Update</button>
-        <button class="button start-button" id="start-${obj.id}" ${obj.isEngineStarted ? 'disabled' : ''}>▶</button>
-        <button class="button remove-button" id="remove-${obj.id}">Remove</button>
-        <button class="button stop-button" id="stop-${obj.id}" ${!obj.isEngineStarted ? 'disabled' : ''}>◼</button>
+        <button class="button select-button" id="select-${
+          obj.id
+        }">Update</button>
+        <button class="button start-button" id="start-${obj.id}" ${
+    obj.isEngineStarted ? "disabled" : ""
+  }>▶</button>
+        <button class="button remove-button" id="remove-${
+          obj.id
+        }">Remove</button>
+        <button class="button stop-button" id="stop-${obj.id}" ${
+    !obj.isEngineStarted ? "disabled" : ""
+  }>◼</button>
       </div>
       <div class="car-item">
         ${renderCarName(obj)}
@@ -56,30 +64,36 @@ function renderTrack(obj: ICarWithId): string {
       </svg>
     </div>
   </div>`;
-  
+
   return str;
 }
 
 export function renderGarage(): string {
   const str = `
   <div class="tracks">
-    ${(storage.cars as Array<ICarWithId>).map((car) => `
+    ${(storage.cars as Array<ICarWithId>)
+      .map(
+        (car) => `
       <div>${renderTrack(car)}</div>
-    `).join('')}
+    `
+      )
+      .join("")}
   </div>`;
   return str;
 }
 
 export function renderWinnersItems(): string {
-  const res = (storage.winners as Array<IWinnerWithCar>).map((item, index) => {
-    return `<tr>
+  const res = (storage.winners as Array<IWinnerWithCar>)
+    .map((item, index) => {
+      return `<tr>
       <td class="tab-col tab-number">${index + 1}</td>
       <td class="tab-col tab-car">${renderCar(item.car.color)}</td>
       <td class="tab-col tab-name">${item.car.name}</td>
       <td class="tab-col tab-wins">${item.wins}</td>
       <td class="tab-col tab-time">${item.time}</td>
     </tr>`;
-  }).join('');
+    })
+    .join("");
 
   return res;
 }
@@ -87,10 +101,18 @@ export function renderWinnersItems(): string {
 function renderTableButtons(): string {
   const str = `<div class="table-buttons-container">
     <button class="button table-button table-wins">
-      ${storage.sortBy === 'wins' ? `Wins: ${storage.sortOrder}` : 'Wins: unsorted'}
+      ${
+        storage.sortBy === "wins"
+          ? `Wins: ${storage.sortOrder}`
+          : "Wins: unsorted"
+      }
     </button>
     <button class="button table-button table-time">
-      ${storage.sortBy === 'time' ? `Time: ${storage.sortOrder}` : 'Time: unsorted'}
+      ${
+        storage.sortBy === "time"
+          ? `Time: ${storage.sortOrder}`
+          : "Time: unsorted"
+      }
     </button>
   </div>`;
 
@@ -211,8 +233,8 @@ function renderPage(): string {
 }
 
 export async function render() {
-  const content = document.createElement('content') as HTMLElement;
-  content.classList.add('content');
+  const content = document.createElement("content") as HTMLElement;
+  content.classList.add("content");
   content.innerHTML = renderPage();
 
   document.body.appendChild(content);

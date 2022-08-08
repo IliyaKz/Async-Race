@@ -1,41 +1,48 @@
-import { storage } from '../storage';
-import { getPackOfCars } from '../apy-components/cars-api';
-import { getPackOfWinners } from '../apy-components/winners-api';
-import { driveCar, startCar, stopCar } from '../apy-components/engine-api';
-import { calcDistance, drawAnimation } from '../utilities';
-import { renderGarage, renderWinners } from './ui-render';
-import { IStorage } from '../interfacesAndTypes';
-import { carsLimit, winnersLimit } from '../constants';
+import { storage } from "../storage";
+import { getPackOfCars } from "../apy-components/cars-api";
+import { getPackOfWinners } from "../apy-components/winners-api";
+import { driveCar, startCar, stopCar } from "../apy-components/engine-api";
+import { calcDistance, drawAnimation } from "../utilities";
+import { renderGarage, renderWinners } from "./ui-render";
+import { IStorage } from "../interfacesAndTypes";
+import { carsLimit, winnersLimit } from "../constants";
 
-export function setterOfDisabled(elements: Array<string>, value: boolean): void {
-
+export function setterOfDisabled(
+  elements: Array<string>,
+  value: boolean
+): void {
   elements.forEach((item) => {
-    const target = document.querySelector(`${item}`) as HTMLInputElement | HTMLButtonElement;
+    const target = document.querySelector(`${item}`) as
+      | HTMLInputElement
+      | HTMLButtonElement;
     if (!target) {
       return;
     }
 
     target.disabled = value;
   });
-
 }
 
-export function updatePaginationNext(page: keyof IStorage, count: keyof IStorage, limit: number): void {
-  if ((Number(storage[page]) * limit) < Number((storage[count]))) {
-    setterOfDisabled(['.next-button'], false);
+export function updatePaginationNext(
+  page: keyof IStorage,
+  count: keyof IStorage,
+  limit: number
+): void {
+  if (Number(storage[page]) * limit < Number(storage[count])) {
+    setterOfDisabled([".next-button"], false);
     return;
   }
 
-  setterOfDisabled(['.next-button'], true);
+  setterOfDisabled([".next-button"], true);
 }
 
 export function updatePaginationPrev(page: keyof IStorage): void {
   if (Number(storage[page]) > 1) {
-    setterOfDisabled(['.prev-button'], false);
+    setterOfDisabled([".prev-button"], false);
     return;
   }
 
-  setterOfDisabled(['.prev-button'], true);
+  setterOfDisabled([".prev-button"], true);
 }
 
 export async function updateStateGarage() {
@@ -44,18 +51,23 @@ export async function updateStateGarage() {
   storage.cars = cars;
   storage.carsCount = count;
 
-  updatePaginationNext('carsPage', 'carsCount', carsLimit);
-  updatePaginationPrev('carsPage');
+  updatePaginationNext("carsPage", "carsCount", carsLimit);
+  updatePaginationPrev("carsPage");
 }
 
 export async function updateStateWinners() {
-  const { winners, count } = await getPackOfWinners(storage.winnersPage, 10, storage.sortBy, storage.sortOrder);
+  const { winners, count } = await getPackOfWinners(
+    storage.winnersPage,
+    10,
+    storage.sortBy,
+    storage.sortOrder
+  );
 
   storage.winners = winners;
   storage.winnersCount = count;
 
-  updatePaginationNext('winnersPage', 'winnersCount', winnersLimit);
-  updatePaginationPrev('winnersPage');
+  updatePaginationNext("winnersPage", "winnersCount", winnersLimit);
+  updatePaginationPrev("winnersPage");
 }
 
 function animateCar(id: number, time: number): void {
@@ -100,18 +112,19 @@ export async function stopDriving(id: number): Promise<void> {
     return;
   }
 
-  car.style.transform = 'translateX(0)';
-  
-  if (storage.animation[id]) window.cancelAnimationFrame(storage.animation[id].id as number);
+  car.style.transform = "translateX(0)";
+
+  if (storage.animation[id])
+    window.cancelAnimationFrame(storage.animation[id].id as number);
 }
 
 export async function setSortOrder(sortBy: string): Promise<void> {
-  storage.sortOrder = (storage.sortOrder === 'asc') ? 'desc' : 'asc';
+  storage.sortOrder = storage.sortOrder === "asc" ? "desc" : "asc";
   storage.sortBy = sortBy;
 
   await updateStateWinners();
-  
-  const winners = (document.querySelector('.winners-view') as HTMLElement);
+
+  const winners = document.querySelector(".winners-view") as HTMLElement;
   if (!winners) {
     return;
   }
@@ -119,23 +132,22 @@ export async function setSortOrder(sortBy: string): Promise<void> {
 }
 
 export async function changePage(param: number): Promise<void> {
-
-  if (storage.view === 'garage') {
+  if (storage.view === "garage") {
     storage.carsPage = storage.carsPage + param;
     await updateStateGarage();
 
-    const garage = (document.querySelector('.garage-container') as HTMLElement);
+    const garage = document.querySelector(".garage-container") as HTMLElement;
     if (!garage) {
       return;
     }
     garage.innerHTML = renderGarage();
   }
 
-  if (storage.view === 'winners') {
+  if (storage.view === "winners") {
     storage.winnersPage = storage.winnersPage + param;
     await updateStateWinners();
 
-    const winners = (document.querySelector('.winners-view') as HTMLElement);
+    const winners = document.querySelector(".winners-view") as HTMLElement;
     if (!winners) {
       return;
     }
@@ -144,35 +156,35 @@ export async function changePage(param: number): Promise<void> {
 }
 
 export function showMessage(name: unknown, time: unknown): void {
-  const message = document.querySelector('.message') as HTMLElement;
-  const messageName = document.querySelector('.message-name') as HTMLElement;
-  const messageTime = document.querySelector('.message-time') as HTMLElement;
+  const message = document.querySelector(".message") as HTMLElement;
+  const messageName = document.querySelector(".message-name") as HTMLElement;
+  const messageTime = document.querySelector(".message-time") as HTMLElement;
   if (!message || !time || !name) {
     return;
   }
 
   messageName.innerHTML = `${name} won!`;
   messageTime.innerHTML = `Time: ${time}`;
-  message.classList.add('visible');
+  message.classList.add("visible");
 }
 
 export function hideMessage(): void {
-  const message = document.querySelector('.message') as HTMLElement;
+  const message = document.querySelector(".message") as HTMLElement;
   if (!message) {
     return;
   }
-  message.classList.remove('visible');
+  message.classList.remove("visible");
 }
 
 export function changeView(active: string, inactive: string): void {
-  const actEl = (document.querySelector(`.${active}-view`) as HTMLElement);
-  const inactEl = (document.querySelector(`.${inactive}-view`) as HTMLElement);
+  const actEl = document.querySelector(`.${active}-view`) as HTMLElement;
+  const inactEl = document.querySelector(`.${inactive}-view`) as HTMLElement;
   if (!actEl || !inactEl) {
     return;
   }
 
-  actEl.style.display = 'flex';
-  inactEl.style.display = 'none';
+  actEl.style.display = "flex";
+  inactEl.style.display = "none";
 
   storage.view = active;
 }

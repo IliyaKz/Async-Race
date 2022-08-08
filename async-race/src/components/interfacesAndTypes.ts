@@ -20,7 +20,7 @@ interface ICar {
 
 interface ICarWithId extends ICar {
   id: number;
-  isEngineStarted?: string
+  isEngineStarted?: string;
 }
 
 interface ICarsPack {
@@ -45,8 +45,8 @@ interface IFetchOptions {
   method: string;
   body?: string;
   headers?: {
-    'Content-Type': string;
-  }
+    "Content-Type": string;
+  };
 }
 
 interface IProm {
@@ -85,4 +85,20 @@ type Callback = (id: number) => Promise<{
   time: number;
 }>;
 
-export { IWinData, Callback, IWinner, ICar, ICarWithId, IAnimationState, IProm, IFetchOptions, ICarsPack, IEngineParams, IDriveParams, IWinnerWithCar, IWinnersPack, ICoordinate, IStorage };
+export {
+  IWinData,
+  Callback,
+  IWinner,
+  ICar,
+  ICarWithId,
+  IAnimationState,
+  IProm,
+  IFetchOptions,
+  ICarsPack,
+  IEngineParams,
+  IDriveParams,
+  IWinnerWithCar,
+  IWinnersPack,
+  ICoordinate,
+  IStorage,
+};
