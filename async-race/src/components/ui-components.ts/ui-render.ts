@@ -26,6 +26,7 @@ function renderCar(color: string): string {
 
   return str;
 }
+
 function renderCarName(obj: ICarWithId): string {
   const str = `<div class="car-name-container">
     ${obj.name}
@@ -178,7 +179,7 @@ function renderForms(): string {
 function renderGarageButtons(): string {
   const str = `<div class="controllers-buttons">
     <button class="button generator-button">Generate cars</button>
-    <button class="button race-button">Rase</button>
+    <button class="button race-button">Race</button>
     <button class="button reset-button" disabled>Reset</button>
   </div>`;
 
