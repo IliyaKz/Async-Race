@@ -1,37 +1,35 @@
 import { storage } from '../storage';
+import { carsLimit } from '../constants';
 import { ICarWithId } from '../interfacesAndTypes';
 import { generateCarsPack, race } from '../utilities';
 import { renderGarage, renderWinners } from './ui-render';
 import { deleteWinner, saveWinnersData } from '../apy-components/winners-api';
 import { createNewCar, deleteCar, getOneCar, updateCar } from '../apy-components/cars-api';
 import { changePage, changeView, hideMessage, setSortOrder, setterOfDisabled, showMessage, startDriving, stopDriving, updatePaginationNext, updatePaginationPrev, updateStateGarage, updateStateWinners } from './ui-functions';
-import { carsLimit } from '../constants';
 
-function addStartButtonListener() {
+function addStartButtonListener(): void {
   document.body.addEventListener('click', async (event: Event) => {
     
     if ((event.target as HTMLElement).classList.contains('start-button')) {
 
       const id = +(event.target as HTMLElement).id.slice(6);
       startDriving(id);
-
     }
   });
 }
 
-function addStopButtonListener() {
+function addStopButtonListener(): void {
   document.body.addEventListener('click', async (event: Event) => {
 
     if ((event.target as HTMLElement).classList.contains('stop-button')) {
 
       const id = +(event.target as HTMLElement).id.slice(5);
       stopDriving(id);
-
     }
   });
 }
 
-function addSelectButtonListener() {
+function addSelectButtonListener(): void {
   document.body.addEventListener('click', async (event: Event) => {
 
     if ((event.target as HTMLElement).classList.contains('select-button')) {
@@ -52,7 +50,7 @@ function addSelectButtonListener() {
   });
 }
 
-function addRemoveButtonListener() {
+function addRemoveButtonListener(): void {
   document.body.addEventListener('click', async (event: Event) => {
 
     if ((event.target as HTMLElement).classList.contains('remove-button')) {
@@ -68,124 +66,135 @@ function addRemoveButtonListener() {
       if (!garage) {
         return;
       }
-
       garage.innerHTML = renderGarage();
     }
   });
 }
 
-function addGeneratorListener() {
-  document.body.addEventListener('click', async (event: Event) => {
+function addGeneratorListener(): void {
+  const target = document.querySelector('.generator-button') as HTMLButtonElement;
+  if (!target) {
+    return;
+  }
 
-    if ((event.target as HTMLButtonElement).classList.contains('generator-button')) {
+  target.addEventListener('click', async () => {
+    setterOfDisabled(['.generator-button'], true);
 
-      setterOfDisabled(['.generator-button'], true);
+    const cars = generateCarsPack();
+    await Promise.all(cars.map(async (c) => { 
+      const res = await createNewCar(c);
+      return res;
+    }));
 
-
-      const cars = generateCarsPack();
-      await Promise.all(cars.map(async (c) => { 
-        const res = await createNewCar(c);
-        return res;
-      }));
-
-      await updateStateGarage();
-      const garage = (document.querySelector('.garage-container') as HTMLElement);
-      if (!garage) {
-        return;
-      }
-
-      garage.innerHTML = renderGarage();
-
-      setterOfDisabled(['.generator-button'], false);
+    await updateStateGarage();
+    const garage = (document.querySelector('.garage-container') as HTMLElement);
+    if (!garage) {
+      return;
     }
+    garage.innerHTML = renderGarage();
+
+    setterOfDisabled(['.generator-button'], false);
   });
 }
 
-function addRaceListener() {
-  document.body.addEventListener('click', async (event: Event) => {
+function addRaceListener(): void {
+  const target = document.querySelector('.race-button') as HTMLButtonElement;
+  if (!target) {
+    return;
+  }
 
-    if ((event.target as HTMLButtonElement).classList.contains('race-button')) {
+  target.addEventListener('click', async () => {
+    setterOfDisabled(['.race-button'], true);
+    setterOfDisabled(['.reset-button'], false);
 
-      setterOfDisabled(['.race-button'], true);
-      setterOfDisabled(['.reset-button'], false);
+    const winner = await race(startDriving);
+    await saveWinnersData(winner.id as number, winner.time as number);
 
-      const winner = await race(startDriving);
-      await saveWinnersData(winner.id as number, winner.time as number);
-
-      showMessage(winner.name, winner.time);
-    }
+    showMessage(winner.name, winner.time);
   });
 }
 
-function addResetListener() {
-  document.body.addEventListener('click', async (event: Event) => {
+function addResetListener(): void {
+  const target = document.querySelector('.reset-button') as HTMLButtonElement;
+  if (!target) {
+    return;
+  }
 
-    if ((event.target as HTMLButtonElement).classList.contains('reset-button')) {
+  target.addEventListener('click', async () => {
+    setterOfDisabled(['.reset-button'], true);
 
-      setterOfDisabled(['.reset-button'], true);
+    (storage.cars as Array<ICarWithId>).map(({ id }) => stopDriving(id));
 
-      (storage.cars as Array<ICarWithId>).map(({ id }) => stopDriving(id));
+    hideMessage();
 
-      hideMessage();
-
-      setterOfDisabled(['.race-button'], false);
-    }
+    setterOfDisabled(['.race-button'], false);
   });
 }
 
-function addPrevButtonListener() {
-  document.body.addEventListener('click', async (event: Event) => {
-    if ((event.target as HTMLButtonElement).classList.contains('prev-button')) {
-      await changePage(-1);
-    }
+function addPrevButtonListener(): void {
+  const target = document.querySelector('.prev-button') as HTMLButtonElement;
+  if (!target) {
+    return;
+  }
+
+  target.addEventListener('click', async () => {
+    await changePage(-1);
   });
 }
 
-function addNextButtonListener() {
-  document.body.addEventListener('click', async (event: Event) => {
-    if ((event.target as HTMLButtonElement).classList.contains('next-button')) {
-      await changePage(1);
-    }
+function addNextButtonListener(): void {
+  const target = document.querySelector('.next-button') as HTMLButtonElement;
+  if (!target) {
+    return;
+  }
+  target.addEventListener('click', async () => {
+    await changePage(1);
   });
 }
 
-function addViewsSwitcherListener() {
-  document.body.addEventListener('click', async (event: Event) => {
-    if ((event.target as HTMLButtonElement).classList.contains('garage-switch')) {
-      changeView('garage', 'winners');
+function addViewsSwitcherListener(): void {
+  const targetGarage = document.querySelector('.garage-switch') as HTMLButtonElement;
+  const targetWinners = document.querySelector('.winners-switch') as HTMLButtonElement;
+  if (!targetGarage || !targetWinners) {
+    return;
+  }
 
-      updatePaginationNext('carsPage', 'carsCount', carsLimit);
-      updatePaginationPrev('carsPage');
+  targetGarage.addEventListener('click', async () => {
+    changeView('garage', 'winners');
+
+    updatePaginationNext('carsPage', 'carsCount', carsLimit);
+    updatePaginationPrev('carsPage');
+  });
+
+  targetWinners.addEventListener('click', async () => {
+    changeView('winners', 'garage');
+
+    await updateStateWinners();
+    const winners = (document.querySelector('.winners-view') as HTMLElement);
+    if (!winners) {
+      return;
     }
-
-    if ((event.target as HTMLButtonElement).classList.contains('winners-switch')) {
-      changeView('winners', 'garage');
-
-      await updateStateWinners();
-      const winners = (document.querySelector('.winners-view') as HTMLElement);
-      if (!winners) {
-        return;
-      }
-
-      winners.innerHTML = renderWinners();
-    }
+    winners.innerHTML = renderWinners();
   });
 }
 
-function addSortListeners() {
-  document.body.addEventListener('click', async (event: Event) => {
+function addSortListeners(): void {
+  const targetWins = document.querySelector('.table-wins') as HTMLButtonElement;
+  const targetTime = document.querySelector('.table-time') as HTMLButtonElement;
+  if (!targetWins || !targetTime) {
+    return;
+  }
 
-    if ((event.target as HTMLButtonElement).classList.contains('table-wins')) {
-      setSortOrder('wins');
-    }
+  targetWins.addEventListener('click', async () => {
+    setSortOrder('wins');
+  });
 
-    if ((event.target as HTMLButtonElement).classList.contains('table-time')) {
-      setSortOrder('time');
-    }
+  targetTime.addEventListener('click', async () => {
+    setSortOrder('time');
   });
 }
 
-function addCreateListener() {
+function addCreateListener(): void {
   const target = document.querySelector('.create-form') as HTMLFormElement;
   if (!target) {
     return;
@@ -202,30 +211,21 @@ function addCreateListener() {
 
     await createNewCar({ name: inputName.value, color: inputColor.value });
 
-    await updateStateGarage();
-    
+    await updateStateGarage();    
     const garage = (document.querySelector('.garage-container') as HTMLElement);
     if (!garage) {
       return;
     }
-
     garage.innerHTML = renderGarage();
 
-    const crName = (document.querySelector('.create-name') as HTMLInputElement);
-    const crColor = (document.querySelector('.create-color') as HTMLInputElement);
-    if (!crName || !crColor) {
-      return;
-    }
-
-    crName.value = '';
-    crColor.value = '#ffffff';
+    inputName.value = '';
+    inputColor.value = '#ffffff';
 
     setterOfDisabled(['.create-form'], true);
   });
-
 }
 
-function addUpdateListener() {
+function addUpdateListener(): void {
   const target = document.querySelector('.update-form') as HTMLFormElement;
   if (!target) {
     return;
@@ -247,44 +247,36 @@ function addUpdateListener() {
     if (!garage) {
       return;
     }
-
     garage.innerHTML = renderGarage();
 
-    const upName = (document.querySelector('.update-name') as HTMLInputElement);
-    const upColor = (document.querySelector('.update-color') as HTMLInputElement);
-    if (!upName || !upColor) {
-      return;
-    }
+    inputName.value = '';
+    inputColor.value = '#ffffff';
 
-    upName.value = '';
-    upColor.value = '#ffffff';
-
-    setterOfDisabled(['.update-name', 'update-color', 'update-submit'], true);
+    setterOfDisabled(['.update-name', '.update-color', '.update-submit'], true);
 
     storage.selectedCar = null;
   });
-
 }
 
-function addMessageCloser() {
+function addMessageCloser(): void {
   document.body.addEventListener('click', () => {
     hideMessage();
   });
 }
 
-export async function listen() {
-  addStartButtonListener();
-  addStopButtonListener();
-  addSelectButtonListener();
-  addRemoveButtonListener();
-  addGeneratorListener();
+export async function listen(): Promise<void> {
   addRaceListener();
   addResetListener();
-  addPrevButtonListener();
-  addNextButtonListener();
-  addViewsSwitcherListener();
+  addMessageCloser();
   addSortListeners();
   addCreateListener();
   addUpdateListener();
-  addMessageCloser();
+  addGeneratorListener();
+  addPrevButtonListener();
+  addNextButtonListener();
+  addStopButtonListener();
+  addStartButtonListener();
+  addSelectButtonListener();
+  addRemoveButtonListener();
+  addViewsSwitcherListener();
 } 

@@ -145,11 +145,15 @@ export async function changePage(param: number): Promise<void> {
 
 export function showMessage(name: unknown, time: unknown): void {
   const message = document.querySelector('.message') as HTMLElement;
-  if (!message) {
+  const messageName = document.querySelector('.message-name') as HTMLElement;
+  const messageTime = document.querySelector('.message-time') as HTMLElement;
+  if (!message || !time || !name) {
     return;
   }
-  message.innerHTML = `${name} went first (${time})`;
-  message.classList.toggle('visible', true);
+
+  messageName.innerHTML = `${name} won!`;
+  messageTime.innerHTML = `Time: ${time}`;
+  message.classList.add('visible');
 }
 
 export function hideMessage(): void {
@@ -157,7 +161,7 @@ export function hideMessage(): void {
   if (!message) {
     return;
   }
-  message.classList.toggle('visible', false);
+  message.classList.remove('visible');
 }
 
 export function changeView(active: string, inactive: string): void {

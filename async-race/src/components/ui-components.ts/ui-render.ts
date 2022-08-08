@@ -38,15 +38,16 @@ function renderTrack(obj: ICarWithId): string {
   const str = `<div class="track">
     <div class="car-container">
       <div class="control-panel">
-        <button class="button select-button" id="select-${obj.id}">Select</button>
+        <button class="button select-button" id="select-${obj.id}">Update</button>
+        <button class="button start-button" id="start-${obj.id}" ${obj.isEngineStarted ? 'disabled' : ''}>▶</button>
         <button class="button remove-button" id="remove-${obj.id}">Remove</button>
-        <div class="car-controllers">
-          <button class="button start-button" id="start-${obj.id}" ${obj.isEngineStarted ? 'disabled' : ''}>▶</button>
-          <button class="button stop-button" id="stop-${obj.id}" ${!obj.isEngineStarted ? 'disabled' : ''}>◼</button>
-        </div>
+        <button class="button stop-button" id="stop-${obj.id}" ${!obj.isEngineStarted ? 'disabled' : ''}>◼</button>
       </div>
-      <div class="car" id="car-${obj.id}">
-        ${renderCar(obj.color)}
+      <div class="car-item">
+        ${renderCarName(obj)}
+        <div class="car" id="car-${obj.id}">
+          ${renderCar(obj.color)}
+        </div>
       </div>
     </div>
     <div class="flag" id="flag-${obj.id}">
@@ -60,13 +61,10 @@ function renderTrack(obj: ICarWithId): string {
 }
 
 export function renderGarage(): string {
-  const str = `<div class="garage-header">
-    <h1 class="garage-title">Cars in garage: ${storage.carsCount}</h1>
-    <h2 class="garage-page">Page: ${storage.carsPage}</h2>
-  </div>
+  const str = `
   <div class="tracks">
     ${(storage.cars as Array<ICarWithId>).map((car) => `
-      <div>${renderCarName(car)}${renderTrack(car)}</div>
+      <div>${renderTrack(car)}</div>
     `).join('')}
   </div>`;
   return str;
@@ -126,8 +124,8 @@ export function renderWinners(): string {
 function renderViewsSwitcher(): string {
   const str = `<div class="view-switcher">
     <div class="switchers-container">
-      <button class="button switch-button garage-switch">garage</button>
-      <button class="button switch-button winners-switch">winners</button>
+      <button class="button switch-button garage-switch">Garage</button>
+      <button class="button switch-button winners-switch">Winners</button>
     </div>
   </div>`;
 
@@ -137,12 +135,12 @@ function renderViewsSwitcher(): string {
 function renderForms(): string {
   const str = `<div class="forms-container">
   <form class="form create-form">
-    <input class="input create-name" name="name" type="text" autocomplete="off">
+    <input class="input create-name" name="name" type="text" autocomplete="off" placeholder="Car name">
     <input class="color create-color" name="color" type="color" value="#ffffff">
     <button class="button create-button" type="submit">Create</button>
   </form>
   <form class="form update-form" id="update">
-    <input class="input update-name" name="name" type="text" autocomplete="off" disabled>
+    <input class="input update-name" name="name" type="text" autocomplete="off" placeholder="Car name" disabled>
     <input class="color update-color" name="color" type="color" value="#ffffff" disabled>
     <button class="button update-button update-submit" type="submit" disabled>Update</button>
   </form>
@@ -153,17 +151,18 @@ function renderForms(): string {
 
 function renderGarageButtons(): string {
   const str = `<div class="controllers-buttons">
+    <button class="button generator-button">Generate cars</button>
     <button class="button race-button">Rase</button>
     <button class="button reset-button" disabled>Reset</button>
-    <button class="button generator-button">Generate cars</button>
   </div>`;
 
   return str;
 }
 
 function renderMessage(): string {
-  const str = `<div>
-  <p class="message"></p>
+  const str = `<div class="message">
+  <p class="message-text message-name"></p>
+  <p class="message-text message-time"></p>
   </div>`;
 
   return str;
@@ -187,17 +186,19 @@ function renderPage(): string {
   </header>
   <main class="main">
     <section class="garage-view" id="garage-view">
-      <div class="main-controllers">
-        <div class="main-controllers-container">
-          ${renderForms()}
-          ${renderGarageButtons()}
+      <div class="main-controllers-container">
+        <div class="garage-header">
+          <h1 class="garage-title">Cars in garage: ${storage.carsCount}</h1>
+          <h2 class="garage-page">Page: ${storage.carsPage}</h2>
         </div>
+        ${renderGarageButtons()}
+        ${renderForms()}
       </div>
-        <div class="garage-container">
-          ${renderGarage()}
-        </div>
-        ${renderMessage()}
-      </section>
+      <div class="garage-container">
+        ${renderGarage()}
+      </div>
+      ${renderMessage()}
+    </section>
     <section class="winners-view" id="winners-view" style="display: none">
       ${renderWinners()}
     </section>
