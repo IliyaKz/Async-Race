@@ -96,7 +96,7 @@ body {
 .garage-header {
   width: 150px;
   justify-content: center;
-  height: 77px;
+  margin: 0 auto 10px;
 }
 .winners-header {
   margin: 0 auto;

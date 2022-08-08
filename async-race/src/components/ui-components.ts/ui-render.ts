@@ -70,6 +70,10 @@ function renderTrack(obj: ICarWithId): string {
 
 export function renderGarage(): string {
   const str = `
+  <div class="garage-header">
+    <h1 class="garage-title">Cars in garage: ${storage.carsCount}</h1>
+    <h2 class="garage-page">Page: ${storage.carsPage}</h2>
+  </div>
   <div class="tracks">
     ${(storage.cars as Array<ICarWithId>)
       .map(
@@ -209,10 +213,6 @@ function renderPage(): string {
   <main class="main">
     <section class="garage-view" id="garage-view">
       <div class="main-controllers-container">
-        <div class="garage-header">
-          <h1 class="garage-title">Cars in garage: ${storage.carsCount}</h1>
-          <h2 class="garage-page">Page: ${storage.carsPage}</h2>
-        </div>
         ${renderGarageButtons()}
         ${renderForms()}
       </div>

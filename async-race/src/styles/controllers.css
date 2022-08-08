@@ -1,11 +1,10 @@
 .main-controllers-container {
-  width: 750px;
+  width: 560px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   align-self: center;
-  border-radius: 10px;
   background-color: var(--dark-gray-block);
   box-sizing: border-box;
   padding: 5px;
