@@ -204,18 +204,16 @@ function addViewsSwitcherListener(): void {
 }
 
 function addSortListeners(): void {
-  const targetWins = document.querySelector(".table-wins") as HTMLButtonElement;
-  const targetTime = document.querySelector(".table-time") as HTMLButtonElement;
-  if (!targetWins || !targetTime) {
-    return;
-  }
-
-  targetWins.addEventListener("click", async () => {
-    setSortOrder("wins");
+  document.body.addEventListener("click", async (event: Event) => {
+    if ((event.target as HTMLElement).classList.contains("table-wins")) {
+      setSortOrder("wins");
+    }
   });
 
-  targetTime.addEventListener("click", async () => {
-    setSortOrder("time");
+  document.body.addEventListener("click", async (event: Event) => {
+    if ((event.target as HTMLElement).classList.contains("table-time")) {
+      setSortOrder("time");
+    }
   });
 }
 
